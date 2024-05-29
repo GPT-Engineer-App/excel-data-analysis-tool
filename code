@@ -1,0 +1,48 @@
+Sub DataAnalysisTool()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim dataRange As Range
+    Dim sumValue As Double
+    Dim avgValue As Double
+    Dim countValue As Long
+
+    ' Set the worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' Change "Sheet1" to your sheet name
+
+    ' Find the last row with data in column A
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+
+    ' Set the data range
+    Set dataRange = ws.Range("A1:A" & lastRow) ' Change "A1:A" to your data range
+
+    ' Format the data range
+    With dataRange
+        .Font.Name = "Arial"
+        .Font.Size = 12
+        .Borders.LineStyle = xlContinuous
+        .Interior.Color = RGB(220, 230, 241)
+    End With
+
+    ' Calculate sum, average, and count
+    sumValue = Application.WorksheetFunction.Sum(dataRange)
+    avgValue = Application.WorksheetFunction.Average(dataRange)
+    countValue = Application.WorksheetFunction.Count(dataRange)
+
+    ' Output the results
+    ws.Range("C1").Value = "Sum"
+    ws.Range("C2").Value = sumValue
+    ws.Range("D1").Value = "Average"
+    ws.Range("D2").Value = avgValue
+    ws.Range("E1").Value = "Count"
+    ws.Range("E2").Value = countValue
+
+    ' Format the output
+    With ws.Range("C1:E2")
+        .Font.Name = "Arial"
+        .Font.Size = 12
+        .Borders.LineStyle = xlContinuous
+        .Interior.Color = RGB(255, 255, 204)
+    End With
+
+    MsgBox "Data analysis complete!", vbInformation
+End Sub
